@@ -8,6 +8,9 @@ export const LOAD_BOOKS='[Books] Load books';
 export const EDIT_BOOK='[Books] Edit book';
 export const DELETE_BOOK='[Books] Delete book';
 
+export const SET_FILTER_BY_BOOK_TITLE='[Books] Set filter by book title';
+export const SET_FILTER_BY_BOOK_YEAR='[Books] Set filter by book year';
+
 
 export class Select implements Action {
     readonly type = SELECT;
@@ -36,4 +39,12 @@ export class DeleteBook implements Action{
 
     constructor(public payload: {id:number}){}
 }
-export type Action = AddBook | Select | DeleteBook | EditBook | LoadBooks;
+export class SetFilterByBookTitle implements Action{
+    readonly type=SET_FILTER_BY_BOOK_TITLE;
+    constructor(public payload: {filterByTitle:string|null}){}
+}
+export class SetFilterByBookYear implements Action{
+    readonly type=SET_FILTER_BY_BOOK_YEAR;
+        constructor(public payload: {filterByYear:string|null}){}
+    }
+export type Action = AddBook | Select | DeleteBook | EditBook | LoadBooks | SetFilterByBookTitle | SetFilterByBookYear;

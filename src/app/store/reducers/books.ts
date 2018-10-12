@@ -3,56 +3,51 @@ import * as bookAction from '../actions/books';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Book } from '../../models';
 
-
-export interface State {
-  ids: number[];
-  books: { [id: number]: Book };
-  selected: number;
-  filterByTitle:number;
-  filterByYear:number;
+export interface State extends EntityState<Book>{
+  selectedBookId:number|null,
+  filterByTitle:string|null,
+  filterByYear:string|null
 }
+export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>();
 
-export const initialState: State = {
-  ids: [],
-  books: {},
-  selected: null,
+export const initialState: State = adapter.getInitialState({
+  selectedBookId: null,
   filterByTitle:null,
   filterByYear:null
-};
+});
 
 export function reducer(state = initialState, action: bookAction.Action) {
   switch (action.type) {
     case bookAction.ADD_BOOK: {
-      const newBook: Book = action.payload.book;
-
-      return {
-        ...state,
-        ids: [...state.ids, newBook.id],
-        books: { ...state.books, newBook }
-      };
-    }
-
-
-    case bookAction.SELECT: {
-      const id = action.payload.id;
-      return {
-        ...state,
-        selected: id
-      };
-    }
-
+      return adapter.addOne(action.payload.book, state);    
+    }  
     case bookAction.EDIT_BOOK: {
-        const book = action.payload.book;
-        return {
-          ...state,
-        };
+      return adapter.updateOne(action.payload.book, state);
       }
+    case bookAction.DELETE_BOOK:{
+      return adapter.removeOne(action.payload.id, state);
+    }
+    case bookAction.SET_FILTER_BY_BOOK_TITLE:{
+      return {
+        ...state,
+        filterByTitle:action.payload.filterByTitle
+      }
+    }
+    case bookAction.SET_FILTER_BY_BOOK_YEAR:{
+      return {
+        ...state,
+        filterByTitle:action.payload.filterByYear
+      }
+    }
 
     default:
       return state;
   }
 }
 
-export const getIds = (state: State) => state.ids;
-export const getBooks= (state: State) => state.books;
-export const getSelected = (state: State) => state.selected;
+
+export const getSelectedUserId = (state: State) => state.selectedBookId;
+
+const {  selectEntities, selectAll } = adapter.getSelectors();
+export const selectBookEntities = selectEntities;
+export const selectAllBooks = selectAll;
