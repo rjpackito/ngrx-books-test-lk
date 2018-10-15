@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content class="book-container">
+    <form [formGroup]="bookForm" class="book-container">
+        <mat-form-field [hideRequiredMarker]="'false'" [floatLabel]="'auto'">
+            <input matInput formControlName='title' placeholder="Название книги" required>
+            <mat-error *ngIf="bookForm.controls.title.invalid">Названи книги длинной не больше 30 символов</mat-error>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="'false'" [floatLabel]="'auto'">
+            <input matInput formControlName='countOfPages' min="0" type="number" required placeholder="Количество страниц">
+            <mat-error *ngIf="bookForm.controls.countOfPages.invalid">Кол-во страниц больше 0, но не больше 10000
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Отменить</button>
+
+    <button mat-button [mat-dialog-close] cdkFocusInitial>Сохранить</button>
+</div>
