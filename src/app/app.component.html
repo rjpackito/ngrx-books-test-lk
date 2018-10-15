@@ -1,7 +1,14 @@
 <mat-toolbar>Books app</mat-toolbar>
 <main class="container">
-   <button mat-button (click)='openDialog()'>Добавить</button>
-
-  <app-book-list [books]="books$ | async" [label]="'Список книг'" (select)="onSelect($event)"></app-book-list>
- 
+  <div class="col-xl-12">
+    <section class="col-xl-6 d-inline-flex">
+      <div>
+        <button mat-button color="primary" (click)='openDialog()'>Добавить книгу</button>
+      </div>
+      <app-book-list [books]="books$ | async" [label]="'Список книг'" (select)="onSelect($event)"></app-book-list>
+    </section>
+    <section class="col-xl-6 d-inline-flex">
+      <app-book-selected [book]="selected$ | async"></app-book-selected>
+    </section>
+  </div>
 </main>

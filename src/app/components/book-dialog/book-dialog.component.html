@@ -2,18 +2,57 @@
 <div mat-dialog-content class="book-container">
     <form [formGroup]="bookForm" class="book-container">
         <mat-form-field [hideRequiredMarker]="'false'" [floatLabel]="'auto'">
-            <input matInput formControlName='title' placeholder="Название книги" required>
-            <mat-error *ngIf="bookForm.controls.title.invalid">Названи книги длинной не больше 30 символов</mat-error>
+            <input matInput formControlName='title' maxlength="30" placeholder="Название книги" required>
+            <mat-error *ngIf="bookForm.controls.title.invalid">Не больше 30 символов</mat-error>
         </mat-form-field>
+        <mat-list role="list">
+            <h3 mat-subheader class="px-0 d-inline">Авторы</h3> <button mat-button color="primary" (click)="addAuthor()">Добавить</button>
+
+            <mat-list-item role="listitem" formArrayName="authors" *ngFor="let item of bookForm.get('authors').controls; let i = index;">
+                <mat-form-field [formGroupName]="i" class="col-5 pl-0">
+                    <input matInput formControlName='firstname' class="pr-1" maxlength="20" required placeholder="Имя">
+                </mat-form-field>
+                <mat-form-field [formGroupName]="i" class="col-5 pr-0">
+                    <input matInput formControlName='surname' class="pl-1" maxlength="20" required placeholder="Фамилия">
+                </mat-form-field>
+                <button [formGroupName]="i" *ngIf="bookForm.get('authors').controls.length>1" mat-button (click)="removeAuthor(i)">Удалить</button>
+            </mat-list-item>
+        </mat-list>
+
         <mat-form-field [hideRequiredMarker]="'false'" [floatLabel]="'auto'">
             <input matInput formControlName='countOfPages' min="0" type="number" required placeholder="Количество страниц">
-            <mat-error *ngIf="bookForm.controls.countOfPages.invalid">Кол-во страниц больше 0, но не больше 10000
+            <mat-error *ngIf="bookForm.controls.countOfPages.invalid">Минимум 1, но не больше 10000
             </mat-error>
         </mat-form-field>
+        <mat-form-field [floatLabel]="'auto'">
+            <input matInput formControlName='publisherName' maxlength="30" placeholder="Название издательства">
+            <mat-error *ngIf="bookForm.controls.publisherName.invalid">Не больше 30 символов</mat-error>
+        </mat-form-field>
+        <mat-form-field [floatLabel]="'auto'">
+            <input matInput formControlName='year' maxlength="30" type="number" placeholder="Год публикации">
+            <mat-error *ngIf="bookForm.controls.year.invalid">Не раньше 1800</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" formControlName='releaseDate' placeholder="Дата выхода в тираж">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="bookForm.controls.releaseDate.releaseDate">Не раньше 01.01.1800
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field [floatLabel]="'auto'">
+            <input matInput formControlName='isbn' placeholder="ISBN">
+            <mat-error *ngIf="bookForm.controls.isbn.invalid">Неверный формат ISBN</mat-error>
+        </mat-form-field>
+        <div>
+            <label for="filePicker">Изображение</label><br>
+            <button id="filePicker" mat-button (click)="openSelectFile()">Выбрать</button>
+            <span class="pl-2">{{bookForm.value.picture.name}}</span>
+            <input #file type="file" style="display:none" accept="image/*" (change)="handleFileSelect($event)">
+        </div>
     </form>
 </div>
 <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Отменить</button>
 
-    <button mat-button [mat-dialog-close] cdkFocusInitial>Сохранить</button>
+    <button mat-button [mat-dialog-close] (click)="saveBook()" color="primary" cdkFocusInitial>Сохранить</button>
 </div>

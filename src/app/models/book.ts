@@ -1,6 +1,7 @@
 import {Author} from './author';
+import { Picture } from './picture';
 export interface Book{
-    id:number;
+    id:string;
     title:string;
     authors: Array<Author>;
     countOfPages:number;
@@ -8,5 +9,5 @@ export interface Book{
     year:number;
     releaseDate:Date;
     isbn:string;
-    picture:string;
+    picture:Picture;
 }

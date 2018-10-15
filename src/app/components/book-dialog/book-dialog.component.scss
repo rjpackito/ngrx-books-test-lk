@@ -18,3 +18,6 @@
   .book-container .mat-radio-button {
     margin: 0 5px;
   }
+  /deep/ .mat-list-item-content{
+    padding: 0 !important;
+  }

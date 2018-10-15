@@ -4,7 +4,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Book } from '../../models';
 
 export interface State extends EntityState<Book>{
-  selectedBookId:number|null,
+  selectedBookId:string|null,
   filterByTitle:string|null,
   filterByYear:string|null
 }
@@ -39,6 +39,12 @@ export function reducer(state = initialState, action: bookAction.Action) {
         filterByTitle:action.payload.filterByYear
       }
     }
+    case bookAction.SELECT:{
+      return{
+        ...state,
+        selectedBookId:action.payload.id
+      }
+    }
 
     default:
       return state;
@@ -46,7 +52,7 @@ export function reducer(state = initialState, action: bookAction.Action) {
 }
 
 
-export const getSelectedUserId = (state: State) => state.selectedBookId;
+export const getSelectedBookId = (state: State) => state.selectedBookId;
 
 const {  selectEntities, selectAll } = adapter.getSelectors();
 export const selectBookEntities = selectEntities;

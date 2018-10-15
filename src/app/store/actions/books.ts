@@ -15,7 +15,7 @@ export const SET_FILTER_BY_BOOK_YEAR='[Books] Set filter by book year';
 export class Select implements Action {
     readonly type = SELECT;
 
-    constructor(public payload: {id:number}) { }
+    constructor(public payload: {id:string}) { }
 }
 
 export class AddBook implements Action {

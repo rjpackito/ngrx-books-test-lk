@@ -1,0 +1,22 @@
+<mat-card *ngIf="book && book.title">
+    <mat-card-header>
+        <mat-card-title>
+            <h3>{{book.title}}</h3>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <strong>Авторы: </strong>
+        <div *ngFor="let author of book.authors">
+                {{author.firstname}} {{author.surname}}
+        </div>
+</mat-card-content>
+
+    <mat-card-content><strong>Количество страниц: </strong>{{book.countOfPages}}</mat-card-content>
+    <mat-card-content><strong>Название издательства: </strong>{{book.publisherName}}</mat-card-content>
+    <mat-card-content><strong>Год публикации: </strong>{{book.year}}</mat-card-content>
+    <mat-card-content><strong>Дата выхода в тираж: </strong>{{publisherDateStr}}</mat-card-content>
+    <mat-card-content><strong>ISBN: </strong>{{book.isbn}}</mat-card-content>
+
+    <img *ngIf='book.picture' mat-card-image src="{{'data:'+book.picture.type+';base64,'+book.picture.content}}" alt="book.picture.name">
+
+</mat-card>
