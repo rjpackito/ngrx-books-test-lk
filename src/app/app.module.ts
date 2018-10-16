@@ -8,7 +8,7 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,MatDatepickerModule, DateAdapter,MAT_DATE_LOCALE,MAT_DATE_FORMATS
+  MatInputModule,MatDatepickerModule, DateAdapter,MAT_DATE_LOCALE,MAT_DATE_FORMATS, MatSelectModule
 } from '@angular/material';
 import {MatMomentDateModule,MomentDateAdapter,MAT_MOMENT_DATE_FORMATS} from '@angular/material-moment-adapter';
 import { AppComponent } from './app.component';
@@ -56,6 +56,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     MatDatepickerModule,
     MatMomentDateModule,
     MatIconModule,
+    MatSelectModule,
     StoreModule.forRoot(reducers,{metaReducers}),
     StoreDevtoolsModule.instrument({
       maxAge: 25

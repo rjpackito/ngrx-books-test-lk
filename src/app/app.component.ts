@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Book } from './models';
+import { Book,Sort } from './models';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './store/reducers/index';
 import * as bookAction from './store/actions/books';
@@ -16,11 +16,13 @@ import { UUID } from 'angular2-uuid';
 export class AppComponent {
   books$: Observable<Book[]>;
   selected$: Observable<Book>;
+  selectedSort$: Observable<Sort>;
 
   constructor(private store: Store<fromRoot.State>, public dialog: MatDialog,
   ) {
-    this.books$ = this.store.select(fromRoot.selectAllBooks);
+    this.books$ = this.store.select(fromRoot.getSortedArray);
     this.selected$ = this.store.select(fromRoot.getSelectedBook);
+    this.selectedSort$ = this.store.select(fromRoot.selectSelectedSort);
 
   }
   onSelect(id: string) {
@@ -75,6 +77,9 @@ export class AppComponent {
   onDelete(id: string) {
     this.store.dispatch(new bookAction.DeleteBook({ id: id }));
     this.store.dispatch(new bookAction.Select({ id: null }));
+  }
+  onChangeSort(sort:Sort){
+    this.store.dispatch(new bookAction.SetSort({ sort: sort }));
   }
 }
 

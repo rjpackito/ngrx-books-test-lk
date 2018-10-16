@@ -1,8 +1,25 @@
+
 <mat-list role="list">
   <h3 mat-subheader class="d-inline">{{label}}</h3>
   <button mat-icon-button color="primary">
     <mat-icon  (click)='add.emit()' title="Добавить книгу">add</mat-icon>
   </button>
+  <mat-form-field class="d-inline-block pl-2">
+      <mat-select  [(ngModel)]="sort"class="sort" [compareWith]="compareObjects" (selectionChange)="selectSort.emit(sort)">
+        <mat-option [value]='sortNull'>--------------------</mat-option>
+        <mat-option [value]="sortByTitleAsc" selec>Название книги по <mat-icon class="rotate-asc">sort</mat-icon></mat-option>
+        <mat-option [value]="sortByTitleDesc">Название книги по <mat-icon>sort</mat-icon></mat-option>
+        <mat-option [value]="sortByYearAsc">Год публикации по <mat-icon class="rotate-asc">sort</mat-icon></mat-option>
+        <mat-option [value]="sortByYearDesc">Год публикации по <mat-icon>sort</mat-icon></mat-option>
+        <mat-select-trigger>
+            <span *ngIf='compareObjects(sortNull,sort)'>--------------------</span>
+            <span *ngIf="compareObjects(sortByTitleAsc,sort)" selec>Название книги по <mat-icon class="rotate-asc">sort</mat-icon></span>
+            <span *ngIf="compareObjects(sortByTitleDesc,sort)">Название книги по <mat-icon>sort</mat-icon></span>
+            <span *ngIf="compareObjects(sortByYearAsc,sort)">Год публикации по <mat-icon class="rotate-asc">sort</mat-icon></span>
+            <span *ngIf="compareObjects(sortByYearDesc,sort)">Год публикации по <mat-icon>sort</mat-icon></span>
+          </mat-select-trigger>
+      </mat-select>
+    </mat-form-field>
   <mat-list-item *ngFor="let book of books" role="listitem">
     <app-book-item [book]="book" (click)="select.emit(book.id)"></app-book-item>
   </mat-list-item>

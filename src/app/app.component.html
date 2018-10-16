@@ -3,7 +3,7 @@
   <div class="col-xl-12">
     <section class="col-xl-6 d-inline-flex">
         
-      <app-book-list [books]="books$ | async" (add)="onOpenAddBook()" [label]="'Список книг'" (select)="onSelect($event)"></app-book-list>
+      <app-book-list [books]="books$ | async" (add)="onOpenAddBook()" [selectedSort]="selectedSort$ | async" (selectSort)="onChangeSort($event)" [label]="'Список книг'" (select)="onSelect($event)"></app-book-list>
     </section>
     <section class="col-xl-6 d-inline-flex">
       <app-book-selected (delete)="onDelete($event)" (edit)="onOpenEditBook($event)" [book]="selected$ | async"></app-book-selected>
