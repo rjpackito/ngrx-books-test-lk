@@ -18,33 +18,63 @@ export class AppComponent {
   selected$: Observable<Book>;
 
   constructor(private store: Store<fromRoot.State>, public dialog: MatDialog,
-    ) {
-    this.books$=this.store.select(fromRoot.selectAllBooks);
-    this.selected$ = store.select(fromRoot.getSelectedBook);
+  ) {
+    this.books$ = this.store.select(fromRoot.selectAllBooks);
+    this.selected$ = this.store.select(fromRoot.getSelectedBook);
 
   }
   onSelect(id: string) {
-    this.store.dispatch(new bookAction.Select({ id:id }));
+    this.store.dispatch(new bookAction.Select({ id: id }));
   }
-  onAddBook(book:Book) {
-    this.store.dispatch(new bookAction.AddBook({ 
-      book:{
-      ...book,
-      id:UUID.UUID()
-      } }));
+  onAddBook(book: Book) {
+    this.store.dispatch(new bookAction.AddBook({
+      book: {
+        ...book,
+        id: UUID.UUID()
+      }
+    }));
   }
-  openDialog() {
+  onEditBook(book: Book) {
+    debugger;
+    this.store.dispatch(new bookAction.EditBook({
+      book: {
+        id: book.id,
+        changes: book,
+      }
+    })
+    );
+  }
+  onOpenEditBook(book:Book) {
+    this.openDialog(false,book);
+  }
+  onOpenAddBook(){
+    this.openDialog(true,null);
+  }
+  openDialog(isAdd: boolean,book:Book) {
     let dialogRef = this.dialog.open(BookDialogComponent, {
       width: '550px',
       height: '800px',
-      data: { title: "Добавление книги" }
-    });
+      data: isAdd ?
+        {
+          title: "Добавление книги"
+        } :
+        {
+          title: "Редактирование книги",
+          book: book
+        }
+    }
+    );
     const sub = dialogRef.componentInstance.onSave.subscribe((data: Book) => {
-      this.onAddBook(data);
+      isAdd ? this.onAddBook(data) : this.onEditBook(data);
+      dialogRef.close();
     });
     dialogRef.afterClosed().subscribe(() => {
       sub.unsubscribe();
     });
+  }
+  onDelete(id: string) {
+    this.store.dispatch(new bookAction.DeleteBook({ id: id }));
+    this.store.dispatch(new bookAction.Select({ id: null }));
   }
 }
 

@@ -37,7 +37,7 @@ export class EditBook implements Action{
 export class DeleteBook implements Action{
     readonly type=DELETE_BOOK;
 
-    constructor(public payload: {id:number}){}
+    constructor(public payload: {id:string}){}
 }
 export class SetFilterByBookTitle implements Action{
     readonly type=SET_FILTER_BY_BOOK_TITLE;

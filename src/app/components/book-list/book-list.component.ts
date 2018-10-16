@@ -20,4 +20,5 @@ export class BookListComponent implements OnInit {
 
     @Input() books: Book[];
     @Output() select = new EventEmitter();
+    @Output() add=new EventEmitter();
 }

@@ -1,10 +1,9 @@
 <mat-list role="list">
-    <h3 mat-subheader>{{label}}</h3>
-
-    <mat-list-item  *ngFor="let book of books" role="listitem" >
-      <app-book-item  [book]="book" (click)="select.emit(book.id)"></app-book-item>
-      <button mat-icon-button class="ml-5">
-          <mat-icon>delete</mat-icon>
-        </button>
-    </mat-list-item>
-  </mat-list>
+  <h3 mat-subheader class="d-inline">{{label}}</h3>
+  <button mat-icon-button color="primary">
+    <mat-icon  (click)='add.emit()' title="Добавить книгу">add</mat-icon>
+  </button>
+  <mat-list-item *ngFor="let book of books" role="listitem">
+    <app-book-item [book]="book" (click)="select.emit(book.id)"></app-book-item>
+  </mat-list-item>
+</mat-list>

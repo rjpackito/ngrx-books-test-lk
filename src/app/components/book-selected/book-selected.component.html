@@ -1,15 +1,24 @@
 <mat-card *ngIf="book && book.title">
     <mat-card-header>
         <mat-card-title>
-            <h3>{{book.title}}</h3>
+            <h3 class="d-inline">{{book.title}}</h3>
+            <mat-card-actions class="d-inline pl-2 ml-1">
+                <button mat-icon-button (click)="edit.emit(book)">
+                    <mat-icon title="Редактировать">edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="delete.emit(book.id)">
+                    <mat-icon title="Удалить">delete</mat-icon>
+                </button>
+            </mat-card-actions>
         </mat-card-title>
+
     </mat-card-header>
     <mat-card-content>
         <strong>Авторы: </strong>
         <div *ngFor="let author of book.authors">
-                {{author.firstname}} {{author.surname}}
+            {{author.firstname}} {{author.surname}}
         </div>
-</mat-card-content>
+    </mat-card-content>
 
     <mat-card-content><strong>Количество страниц: </strong>{{book.countOfPages}}</mat-card-content>
     <mat-card-content><strong>Название издательства: </strong>{{book.publisherName}}</mat-card-content>
@@ -17,6 +26,7 @@
     <mat-card-content><strong>Дата выхода в тираж: </strong>{{publisherDateStr}}</mat-card-content>
     <mat-card-content><strong>ISBN: </strong>{{book.isbn}}</mat-card-content>
 
-    <img *ngIf='book.picture.content' mat-card-image src="{{'data:'+book.picture.type+';base64,'+book.picture.content}}" alt="book.picture.name">
+    <img *ngIf='book.picture && book.picture.content' mat-card-image src="{{'data:'+book.picture.type+';base64,'+book.picture.content}}"
+        alt="book.picture.name">
 
 </mat-card>
