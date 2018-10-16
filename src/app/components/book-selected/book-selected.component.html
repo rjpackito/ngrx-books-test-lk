@@ -17,6 +17,6 @@
     <mat-card-content><strong>Дата выхода в тираж: </strong>{{publisherDateStr}}</mat-card-content>
     <mat-card-content><strong>ISBN: </strong>{{book.isbn}}</mat-card-content>
 
-    <img *ngIf='book.picture' mat-card-image src="{{'data:'+book.picture.type+';base64,'+book.picture.content}}" alt="book.picture.name">
+    <img *ngIf='book.picture.content' mat-card-image src="{{'data:'+book.picture.type+';base64,'+book.picture.content}}" alt="book.picture.name">
 
 </mat-card>
